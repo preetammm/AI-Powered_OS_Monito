@@ -211,10 +211,5 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ---
 
-## License
-
-This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
-
----
 
 > Built with ❤️ to demonstrate real-world system programming, AI integration, and production-grade monitoring — April 2024.
