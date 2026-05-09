@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SysCore AI Monitor</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="dashboard">
+
+        <!-- 1. Hero Header -->
+        <header class="glass anim-enter header" style="animation-delay: 0.1s">
+            <div class="app-brand">
+                <div class="status-dot"></div>
+                SysCore AI Monitor
+            </div>
+            <div class="header-controls">
+                <div class="live-time mono" id="datetime">--:--:--</div>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-muted); cursor: pointer; transition: color 0.2s;"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            </div>
+        </header>
+
+        <!-- 2. Metric Cards -->
+        <div class="metric-cards anim-enter" style="animation-delay: 0.2s">
+            <div class="glass m-card" style="--c: var(--cpu); border-bottom: 2px solid var(--c);">
+                <div class="m-header" style="color: var(--c)">CPU Usage</div>
+                <div class="m-main">
+                    <div class="m-ring"><svg viewBox="0 0 64 64"><circle class="bg" cx="32" cy="32" r="28" /><circle class="progress" cx="32" cy="32" r="28" style="stroke: var(--c)" id="ring-cpu" /></svg></div>
+                    <div class="m-val-container"><span class="m-val mono" id="val-cpu">0</span><span class="m-unit">%</span></div>
+                </div>
+                <div class="m-spark"><svg preserveAspectRatio="none" id="spark-cpu"></svg></div>
+            </div>
+            <div class="glass m-card" style="--c: var(--ram); border-bottom: 2px solid var(--c);">
+                <div class="m-header" style="color: var(--c)">RAM Usage</div>
+                <div class="m-main">
+                    <div class="m-ring"><svg viewBox="0 0 64 64"><circle class="bg" cx="32" cy="32" r="28" /><circle class="progress" cx="32" cy="32" r="28" style="stroke: var(--c)" id="ring-ram" /></svg></div>
+                    <div class="m-val-container"><span class="m-val mono" id="val-ram">0</span><span class="m-unit">%</span></div>
+                </div>
+                <div class="m-spark"><svg preserveAspectRatio="none" id="spark-ram"></svg></div>
+            </div>
+            <div class="glass m-card" style="--c: var(--disk); border-bottom: 2px solid var(--c);">
+                <div class="m-header" style="color: var(--c)">Disk Used</div>
+                <div class="m-main">
+                    <div class="m-ring"><svg viewBox="0 0 64 64"><circle class="bg" cx="32" cy="32" r="28" /><circle class="progress" cx="32" cy="32" r="28" style="stroke: var(--c)" id="ring-disk" /></svg></div>
+                    <div class="m-val-container"><span class="m-val mono" id="val-disk">0</span><span class="m-unit">%</span></div>
+                </div>
+                <div class="m-spark"><svg preserveAspectRatio="none" id="spark-disk"></svg></div>
+            </div>
+            <div class="glass m-card" style="--c: var(--gpu); border-bottom: 2px solid var(--c);">
+                <div class="m-header" style="color: var(--c)">GPU Temp</div>
+                <div class="m-main">
+                    <div class="m-ring"><svg viewBox="0 0 64 64"><circle class="bg" cx="32" cy="32" r="28" /><circle class="progress" cx="32" cy="32" r="28" style="stroke: var(--c)" id="ring-gpu" /></svg></div>
+                    <div class="m-val-container"><span class="m-val mono" id="val-gpu">0</span><span class="m-unit">°C</span></div>
+                </div>
+                <div class="m-spark"><svg preserveAspectRatio="none" id="spark-gpu"></svg></div>
+            </div>
+            <div class="glass m-card" style="--c: var(--net); border-bottom: 2px solid var(--c);">
+                <div class="m-header" style="color: var(--c)">Network Speed</div>
+                <div class="m-main">
+                    <div class="m-ring"><svg viewBox="0 0 64 64"><circle class="bg" cx="32" cy="32" r="28" /><circle class="progress" cx="32" cy="32" r="28" style="stroke: var(--c)" id="ring-net" /></svg></div>
+                    <div class="m-val-container"><span class="m-val mono" id="val-net">0</span><span class="m-unit">MB/s</span></div>
+                </div>
+                <div class="m-spark"><svg preserveAspectRatio="none" id="spark-net"></svg></div>
+            </div>
+            <div class="glass m-card" style="--c: var(--proc); border-bottom: 2px solid var(--c);">
+                <div class="m-header" style="color: var(--c)">Active Processes</div>
+                <div class="m-main">
+                    <div class="m-ring"><svg viewBox="0 0 64 64"><circle class="bg" cx="32" cy="32" r="28" /><circle class="progress" cx="32" cy="32" r="28" style="stroke: var(--c)" id="ring-proc" /></svg></div>
+                    <div class="m-val-container"><span class="m-val mono" id="val-proc">0</span></div>
+                </div>
+                <div class="m-spark"><svg preserveAspectRatio="none" id="spark-proc"></svg></div>
+            </div>
+        </div>
+
+        <!-- 3. Real-time CPU & RAM Graph -->
+        <div class="section-card glass col-8 anim-enter" style="animation-delay: 0.3s">
+            <div class="section-title">
+                Real-time Resources
+                <div class="legend" style="margin-left: auto; position: static;">
+                    <div class="legend-item"><div class="dot-cpu"></div>CPU %</div>
+                    <div class="legend-item"><div class="dot-ram"></div>RAM %</div>
+                </div>
+            </div>
+            <div class="chart-wrap">
+                <svg viewBox="0 0 800 200" preserveAspectRatio="none" id="main-chart-svg" class="chart-svg">
+                    <defs>
+                        <linearGradient id="g-cpu" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="var(--cpu)" stop-opacity="0.3"/>
+                            <stop offset="100%" stop-color="var(--cpu)" stop-opacity="0.0"/>
+                        </linearGradient>
+                        <linearGradient id="g-ram" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="var(--ram)" stop-opacity="0.3"/>
+                            <stop offset="100%" stop-color="var(--ram)" stop-opacity="0.0"/>
+                        </linearGradient>
+                    </defs>
+                    <g stroke="rgba(255,255,255,0.05)" stroke-dasharray="4 4">
+                        <line x1="0" y1="50" x2="800" y2="50"/>
+                        <line x1="0" y1="100" x2="800" y2="100"/>
+                        <line x1="0" y1="150" x2="800" y2="150"/>
+                    </g>
+                    <text x="5" y="15" fill="var(--text-muted)" font-size="11">100%</text>
+                    <text x="5" y="105" fill="var(--text-muted)" font-size="11">50%</text>
+                    <path id="path-cpu-area" fill="url(#g-cpu)" style="transition: d 0.3s linear" />
+                    <path id="path-ram-area" fill="url(#g-ram)" style="transition: d 0.3s linear" />
+                    <path id="path-cpu-line" fill="none" stroke="var(--cpu)" stroke-width="2" style="transition: d 0.3s linear; filter: drop-shadow(0 0 4px var(--cpu));" />
+                    <path id="path-ram-line" fill="none" stroke="var(--ram)" stroke-width="2" style="transition: d 0.3s linear; filter: drop-shadow(0 0 4px var(--ram));" />
+                </svg>
+            </div>
+        </div>
+
+        <!-- 4. AI Predictive Alert Engine -->
+        <div class="section-card glass col-4 anim-enter" style="animation-delay: 0.4s">
+            <div class="section-title">
+                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                SysCore AI
+            </div>
+            <div class="terminal">
+                <div class="terminal-content" id="terminal-content">
+                    <div class="alert-row">
+                        <span class="alert-time mono">[System]</span> <span class="badge b-info">Info</span> <span style="color:var(--text-main)">SysCore AI initialized. Neural predictive engine online. Monitoring live telemetry...</span>
+                    </div>
+                </div>
+                <div><span class="cursor"></span></div>
+            </div>
+        </div>
+
+        <!-- 5. Process Table -->
+        <div class="section-card glass col-8 anim-enter" style="animation-delay: 0.5s">
+            <div class="section-title">Active Processes</div>
+            <div class="table-controls">
+                <input type="text" id="proc-search" class="search-input" placeholder="Search processes by name or status...">
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Process Name</th>
+                            <th>PID</th>
+                            <th>CPU%</th>
+                            <th>RAM%</th>
+                            <th>Disk I/O</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="proc-body"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 6. Storage Breakdown -->
+        <div class="section-card glass col-4 anim-enter" style="animation-delay: 0.6s">
+            <div class="section-title">Storage Breakdown</div>
+            <div class="storage-bar">
+                <div class="s-seg" id="s-os" style="background: var(--purple); width: 0%;"></div>
+                <div class="s-seg" id="s-app" style="background: var(--blue); width: 0%;"></div>
+                <div class="s-seg" id="s-med" style="background: var(--teal); width: 0%;"></div>
+                <div class="s-seg" id="s-cac" style="background: var(--disk); width: 0%;"></div>
+                <div class="s-seg" id="s-free" style="background: rgba(255,255,255,0.05); width: 0%;"></div>
+            </div>
+            <div class="s-legend">
+                <div class="s-item"><div class="s-label"><div class="s-dot" style="background:var(--purple)"></div>OS</div><div class="mono" style="color:#fff">45 GB</div></div>
+                <div class="s-item"><div class="s-label"><div class="s-dot" style="background:var(--blue)"></div>Apps</div><div class="mono" style="color:#fff">120 GB</div></div>
+                <div class="s-item"><div class="s-label"><div class="s-dot" style="background:var(--teal)"></div>Media</div><div class="mono" style="color:#fff">350 GB</div></div>
+                <div class="s-item"><div class="s-label"><div class="s-dot" style="background:var(--disk)"></div>Cache</div><div class="mono" style="color:#fff">25 GB</div></div>
+                <div class="s-item"><div class="s-label"><div class="s-dot" style="background:rgba(255,255,255,0.1)"></div>Free</div><div class="mono" style="color:#fff">460 GB</div></div>
+            </div>
+        </div>
+
+        <!-- 7. Network Monitor -->
+        <div class="section-card glass col-4 anim-enter" style="animation-delay: 0.7s">
+            <div class="section-title">Network Monitor</div>
+            <div class="net-charts">
+                <div class="net-box">
+                    <div class="net-head">
+                        <div>
+                            <div class="net-title">Upload Speed</div>
+                            <div class="net-val mono"><span id="net-up-val">0.0</span> <span style="font-size:14px; color:var(--text-muted)">MB/s</span></div>
+                        </div>
+                        <svg width="20" height="20" stroke="var(--purple)" stroke-width="2" fill="none"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+                    </div>
+                    <div class="net-svg"><svg viewBox="0 0 100 30" preserveAspectRatio="none" id="net-spark-up"></svg></div>
+                    <div class="net-total">Total Sent: <span class="mono" style="color:#fff" id="net-up-total">1.00 GB</span></div>
+                </div>
+                <div class="net-box">
+                    <div class="net-head">
+                        <div>
+                            <div class="net-title">Download Speed</div>
+                            <div class="net-val mono"><span id="net-down-val">0.0</span> <span style="font-size:14px; color:var(--text-muted)">MB/s</span></div>
+                        </div>
+                        <svg width="20" height="20" stroke="var(--teal)" stroke-width="2" fill="none"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+                    </div>
+                    <div class="net-svg"><svg viewBox="0 0 100 30" preserveAspectRatio="none" id="net-spark-down"></svg></div>
+                    <div class="net-total">Total Recv: <span class="mono" style="color:#fff" id="net-down-total">4.00 GB</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. System Info Panel -->
+        <div class="section-card glass col-4 anim-enter" style="animation-delay: 0.8s">
+            <div class="section-title">System Information</div>
+            <div class="sys-grid">
+                <div class="sys-item"><span class="sys-lbl">OS</span><span class="sys-val">Linux Ubuntu 22.04</span></div>
+                <div class="sys-item"><span class="sys-lbl">Kernel</span><span class="sys-val mono">6.5.0-generic</span></div>
+                <div class="sys-item"><span class="sys-lbl">Hostname</span><span class="sys-val mono">sysnode-01</span></div>
+                <div class="sys-item"><span class="sys-lbl">CPU Model</span><span class="sys-val">Intel Core i7-12700K</span></div>
+                <div class="sys-item"><span class="sys-lbl">Total RAM</span><span class="sys-val mono">32 GB</span></div>
+                <div class="sys-item"><span class="sys-lbl">Architecture</span><span class="sys-val mono">x86_64</span></div>
+                <div class="sys-item" style="grid-column: span 2; margin-top: 8px;"><span class="sys-lbl">System Uptime</span><span class="sys-val mono" style="font-size: 20px; color: var(--cpu);" id="uptime-val">00:00:00</span></div>
+            </div>
+        </div>
+
+        <!-- 9. AI Health Score -->
+        <div class="section-card glass col-4 anim-enter" style="animation-delay: 0.9s">
+            <div class="section-title">SysCore AI Health</div>
+            <div class="health-wrap">
+                <div class="h-dial">
+                    <svg viewBox="0 0 160 160" id="h-svg">
+                        <circle class="h-bg" cx="80" cy="80" r="72" />
+                        <circle class="h-prog" cx="80" cy="80" r="72" id="h-prog" stroke="var(--proc)" />
+                    </svg>
+                    <div class="h-center">
+                        <div class="h-score mono"><span id="h-score">100</span></div>
+                    </div>
+                </div>
+                <div class="h-label">System Health Score</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
